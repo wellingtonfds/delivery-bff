@@ -13,6 +13,7 @@ export class ProductController {
     @Get('/product/list')
     async getList(): Promise<any> {
         const list = await this.appService.getList()
+        console.log('list', list)
         return list
 
     }

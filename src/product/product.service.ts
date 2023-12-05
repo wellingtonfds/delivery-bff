@@ -12,12 +12,12 @@ export class ProductService {
     }
 
     async getList() {
-        const response = await this.appService.findAll()
+        const response = await this.appService.list()
         return response
     }
 
     async create() {
-        const response = await this.appService.create({
+        const response = await this.appService.createProduct({
             name: 'test',
             value: 10,
             discount: 0,

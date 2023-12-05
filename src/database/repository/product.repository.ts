@@ -1,21 +1,29 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { ProductDto } from "src/dto/product.dto";
-import { Product } from "../schemas/product";
+import { Injectable, OnModuleInit } from "@nestjs/common";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 @Injectable()
-export class ProductRepository {
+export class ProductRepository extends PrismaClient implements OnModuleInit {
 
-    constructor(@InjectModel(Product.name) private productModel: Model<Product>) { }
 
-    async create(createCatDto: ProductDto): Promise<Product> {
-        const createdCat = new this.productModel(createCatDto);
-        return createdCat.save();
+    async onModuleInit() {
+        await this.$connect()
     }
 
-    async findAll(): Promise<Product[]> {
-        return this.productModel.find().exec();
+    async find(where?: Prisma.productWhereUniqueInput) {
+        return this.product.findMany({ where })
+
     }
+
+
+    async list(skip: number = 0, take: number = 10, where?: Prisma.productWhereUniqueInput) {
+        return this.product.findMany({ skip, take, where })
+
+    }
+
+    async createProduct(data: Prisma.productCreateInput) {
+        return this.product.create({ data })
+    }
+
+
 
 }
