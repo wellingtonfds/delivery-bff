@@ -17,14 +17,14 @@ export class ProductService {
     }
 
     async create() {
-        const response = await this.appService.createProduct({
-            name: 'test',
-            value: 10,
-            discount: 0,
-            discountUntil: new Date(),
-            quantity: 100,
-            sku: '123123123123',
-            brand: 'teste'
-        })
+        // const response = await this.appService.createProduct({
+        //     name: 'test',
+        //     value: 10,
+        //     discount: 0,
+        //     discountUntil: new Date(),
+        //     quantity: 100,
+        //     sku: '123123123123',
+        //     brand: 'teste'
+        // })
     }
 }

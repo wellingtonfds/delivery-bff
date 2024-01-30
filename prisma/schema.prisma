@@ -3,21 +3,101 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 
-model product {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  value     Float
-  discount  Float
-  discountUntil DateTime 
-  quantity Int
-  sku       String
-  brand     String
+
+model Company {
+  id       BigInt    @id @db.BigInt @default(autoincrement())
+  cnpj      String   @unique  
+  name      String   @unique
+  address   String?
+  addressNumber String?
+  neighborhood String?
+  city  String?
+  postCode  Int?
+  contacts CompanyContact[]
+  config CompanyConfig?
+  users User[]
+  productCategory ProductCategory[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
+
+
+enum CompanyContactType {
+  PHONE
+  EMAIL
+  WHATAPP
+  TELEGRAN
+}
+model CompanyContact {
+  id        BigInt    @id @db.BigInt @default(autoincrement())
+  type      CompanyContactType
+  value     String @unique
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId BigInt @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model CompanyConfig {
+  id         BigInt    @id @db.BigInt @default(autoincrement())
+  colorTheme String?
+  logo       String?
+  company    Company @relation(fields: [companyId], references: [id])
+  companyId  BigInt @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+}
+
+model ProductCategory {
+  id        BigInt    @id @db.BigInt @default(autoincrement())
+  name      String
+  description String
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId BigInt @unique
+  product Product?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Product {
+  id        BigInt    @id @db.BigInt @default(autoincrement())
+  name      String
+  value     Decimal
+  discount  Decimal
+  description String
+  smallDescription String
+  discountUntil DateTime ?
+  photo String?
+  thumb String?
+  quantity Int
+  sku       String?
+  publish   DateTime?
+  category   ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId BigInt @unique 
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model User {
+  id         BigInt    @id @db.BigInt @default(autoincrement())
+  name       String
+  email      String
+  password   String
+  company    Company? @relation(fields: [companyId], references: [id])
+  companyId  BigInt? @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+
+
