@@ -11,10 +11,7 @@ export class ProductService {
         return 'Hello World! Product'
     }
 
-    async getList() {
-        const response = await this.appService.list()
-        return response
-    }
+
 
     async create() {
         // const response = await this.appService.createProduct({

@@ -1,11 +1,23 @@
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
+import { GraphQLModule } from "@nestjs/graphql";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
+import { UserModule } from './user/user.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
-  imports: [DatabaseModule, ProductModule],
+  imports: [DatabaseModule, ProductModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+      sortSchema: true,
+      introspection: true,
+    }),
+    UserModule,
+    CompanyModule],
   controllers: [AppController],
   providers: [AppService],
 })
