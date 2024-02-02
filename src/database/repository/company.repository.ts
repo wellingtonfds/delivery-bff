@@ -18,4 +18,12 @@ export class CompanyRepository extends PrismaClient implements OnModuleInit {
         return company
     }
 
+    async findByCNPJ(cnpj: string) {
+        return this.company.findUnique({
+            where: {
+                cnpj
+            }
+        })
+    }
+
 }

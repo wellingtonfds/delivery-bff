@@ -1,9 +1,14 @@
-import { Field, InputType, Int } from "@nestjs/graphql"
+import { Field, InputType, Int } from "@nestjs/graphql";
+import { Validate } from "class-validator";
+import { CNPJValidate } from "src/shared/validate/cnpj.validate";
+
+
 
 @InputType()
-export class CompanyCreateDTO {
+export class CompanyCreateInput {
 
     @Field()
+    @Validate(CNPJValidate)
     cnpj: string
 
     @Field()
