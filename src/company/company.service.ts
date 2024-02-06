@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Company } from '@prisma/client';
 import { CompanyRepository } from 'src/database/repository/company.repository';
-import { CompanyCreateInput } from './input/company-create.input';
+import { CreateCompanyInput } from './input/create-company.input';
 
 
 @Injectable()
@@ -10,7 +10,7 @@ export class CompanyService {
 
     constructor(private companyRepository: CompanyRepository) { }
 
-    async createOrUpdate(createData: CompanyCreateInput): Promise<Company> {
+    async createOrUpdate(createData: CreateCompanyInput): Promise<Company> {
 
         const hasCompany = await this.companyRepository.findByCNPJ(createData.cnpj)
         if (hasCompany) {

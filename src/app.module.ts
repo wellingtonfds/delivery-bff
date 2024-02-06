@@ -3,10 +3,10 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { CompanyModule } from './company/company.module';
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
 import { UserModule } from './user/user.module';
-import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [DatabaseModule, ProductModule,
@@ -17,7 +17,8 @@ import { CompanyModule } from './company/company.module';
       introspection: true,
     }),
     UserModule,
-    CompanyModule],
+    CompanyModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

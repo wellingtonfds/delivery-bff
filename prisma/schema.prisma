@@ -42,7 +42,7 @@ model CompanyContact {
   type      CompanyContactType
   value     String @unique
   company   Company @relation(fields: [companyId], references: [id])
-  companyId BigInt @unique
+  companyId BigInt 
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
@@ -94,7 +94,7 @@ model User {
   email      String
   password   String
   company    Company? @relation(fields: [companyId], references: [id])
-  companyId  BigInt? @unique
+  companyId  BigInt? 
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }

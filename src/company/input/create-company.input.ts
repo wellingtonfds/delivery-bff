@@ -5,7 +5,7 @@ import { CNPJValidate } from "src/shared/validate/cnpj.validate";
 
 
 @InputType()
-export class CompanyCreateInput {
+export class CreateCompanyInput {
 
     @Field()
     @Validate(CNPJValidate)
