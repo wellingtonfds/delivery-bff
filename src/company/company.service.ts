@@ -13,12 +13,14 @@ export class CompanyService {
     async createOrUpdate(createData: CreateCompanyInput): Promise<Company> {
 
         const hasCompany = await this.companyRepository.findByCNPJ(createData.cnpj)
-        if (hasCompany) {
+        if (hasCompany?.id) {
             throw new Error("CNPJ já está cadastrado, qualquer dúvida entrar em contato com suporte")
         }
 
-        return await this.companyRepository.create({
+        const returnData = await this.companyRepository.create({
             ...createData
         })
+
+        return returnData
     }
 }

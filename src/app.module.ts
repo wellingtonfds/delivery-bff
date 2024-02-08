@@ -6,6 +6,7 @@ import { AppService } from "./app.service";
 import { CompanyModule } from './company/company.module';
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
+import { BigIntScalar } from "./scalars";
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -15,6 +16,8 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: true,
       sortSchema: true,
       introspection: true,
+      resolvers: { BigInt: BigIntScalar },
+
     }),
     UserModule,
     CompanyModule

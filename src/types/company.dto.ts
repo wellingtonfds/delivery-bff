@@ -1,10 +1,13 @@
-import { Field, ID, Int, ObjectType } from "@nestjs/graphql"
+import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { BigIntScalar } from "src/scalars";
+
+
 
 @ObjectType()
 export class CompanyData {
 
 
-    @Field(() => ID)
+    @Field(() => BigIntScalar)
     id: bigint
 
     @Field()
