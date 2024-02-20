@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    container_name: st-backend-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    hostname: ${PG_HOST}
+    ports:
+      - "${PG_PORT}:${PG_PORT}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${PG_USER} -d ${PG_DATABASE} -h ${PG_HOST} -p ${PG_PORT}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
