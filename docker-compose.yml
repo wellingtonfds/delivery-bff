@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     image: postgres:latest
-    container_name: st-backend-postgres
+    container_name: delivery-bff-postgres
     restart: always
     environment:
       POSTGRES_DB: ${PG_DATABASE}

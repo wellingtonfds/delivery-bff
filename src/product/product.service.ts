@@ -11,6 +11,19 @@ export class ProductService {
         return 'Hello World! Product'
     }
 
+    // async createOrUpdate(createData): Promise<Company> {
+
+    //     const hasCompany = await this.companyRepository.findByCNPJ(createData.cnpj)
+    //     if (hasCompany?.id) {
+    //         throw new Error("CNPJ já está cadastrado, qualquer dúvida entrar em contato com suporte")
+    //     }
+
+    //     const returnData = await this.companyRepository.create({
+    //         ...createData
+    //     })
+
+    //     return returnData
+    // }
 
 
     async create() {

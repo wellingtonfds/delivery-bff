@@ -3,9 +3,7 @@ import { Company, Prisma, PrismaClient } from "@prisma/client";
 
 @Injectable()
 export class CompanyRepository extends PrismaClient implements OnModuleInit {
-
-
-
+    d
 
     async onModuleInit() {
         await this.$connect()

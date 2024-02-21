@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from "@nestjs/common";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, Product } from "@prisma/client";
 
 @Injectable()
 export class ProductRepository extends PrismaClient implements OnModuleInit {
@@ -9,6 +9,10 @@ export class ProductRepository extends PrismaClient implements OnModuleInit {
         await this.$connect()
     }
 
+    async create(data: Prisma.ProductCreateInput): Promise<Product> {
 
+        const product = await this.product.create({ data })
+        return product
+    }
 
 }
