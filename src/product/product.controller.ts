@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ProductService } from './product.service';
 
 @Controller()
@@ -14,10 +14,5 @@ export class ProductController {
     async getList(): Promise<any> {
 
 
-    }
-
-    @Post('/product')
-    async createProduct(): Promise<any> {
-        return await this.appService.create()
     }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Product } from '@prisma/client';
 import { ProductRepository } from '../database/repository/product.repository';
+import { CreateProductInput } from './input/create-product.input';
 
 
 @Injectable()
@@ -11,30 +13,13 @@ export class ProductService {
         return 'Hello World! Product'
     }
 
-    // async createOrUpdate(createData): Promise<Company> {
+    async create(createData: CreateProductInput): Promise<Product> {
 
-    //     const hasCompany = await this.companyRepository.findByCNPJ(createData.cnpj)
-    //     if (hasCompany?.id) {
-    //         throw new Error("CNPJ já está cadastrado, qualquer dúvida entrar em contato com suporte")
-    //     }
+        const response = await this.appService.create({
+            ...createData,
+            publish: createData.publish ? new Date() : null
+        })
 
-    //     const returnData = await this.companyRepository.create({
-    //         ...createData
-    //     })
-
-    //     return returnData
-    // }
-
-
-    async create() {
-        // const response = await this.appService.createProduct({
-        //     name: 'test',
-        //     value: 10,
-        //     discount: 0,
-        //     discountUntil: new Date(),
-        //     quantity: 100,
-        //     sku: '123123123123',
-        //     brand: 'teste'
-        // })
+        return response
     }
 }
