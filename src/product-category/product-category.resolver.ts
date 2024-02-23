@@ -9,6 +9,7 @@ export class ProductCategoryResolver {
     @Mutation(() => String, { nullable: true })
     public async createProductCategory(@Args('createProductCategory') createData: CreateProductCategoryInput): Promise<string> {
 
+        await this.categoryService.create(createData)
         console.log('createData', createData)
         return 'ok'
     }

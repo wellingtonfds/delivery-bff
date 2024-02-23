@@ -13,6 +13,6 @@ export class CreateProductCategoryInput {
     description: string
 
     @Field(() => BigIntScalar)
-    companyId: BigInt
+    companyId: bigint
 
 }

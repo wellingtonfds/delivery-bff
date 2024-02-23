@@ -1,9 +1,13 @@
 import { Field, Float, InputType, Int } from "@nestjs/graphql";
+import { BigIntScalar } from "src/scalars";
 
 
 
 @InputType()
 export class CreateProductInput {
+
+    @Field(() => BigIntScalar)
+    productCategoryId: bigint
 
     @Field()
     name: string

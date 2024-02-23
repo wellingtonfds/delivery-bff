@@ -21,7 +21,7 @@ model Company {
   updatedAt       DateTime         @updatedAt
   config          CompanyConfig?
   contacts        CompanyContact[]
-  productCategory ProductCategory?
+  productCategory ProductCategory[]
   users           User[]
 }
 
@@ -49,10 +49,10 @@ model ProductCategory {
   id          BigInt   @id @default(autoincrement())
   name        String
   description String
-  companyId   BigInt   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  product     Product?
+  product     Product[]
+  companyId   BigInt   
   company     Company  @relation(fields: [companyId], references: [id])
 }
 
@@ -69,10 +69,10 @@ model Product {
   quantity         Int?
   sku              String?
   publish          DateTime?
-  categoryId       BigInt          @unique
+  categoryId       BigInt 
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
-  category         ProductCategory? @relation(fields: [categoryId], references: [id])
+  category         ProductCategory @relation(fields: [categoryId], references: [id])
 }
 
 model User {

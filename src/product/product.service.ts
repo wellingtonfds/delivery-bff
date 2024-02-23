@@ -15,10 +15,15 @@ export class ProductService {
 
     async create(createData: CreateProductInput): Promise<Product> {
 
-        const response = await this.appService.create({
+        const payload = {
             ...createData,
+            category: {
+                connect: { id: createData.productCategoryId }
+            },
             publish: createData.publish ? new Date() : null
-        })
+        }
+        delete payload.productCategoryId
+        const response = await this.appService.create(payload)
 
         return response
     }
