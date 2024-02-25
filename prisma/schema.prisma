@@ -9,16 +9,16 @@ datasource db {
 }
 
 model Company {
-  id              BigInt           @id @default(autoincrement())
-  cnpj            String           @unique
-  name            String           @unique
+  id              BigInt            @id @default(autoincrement())
+  cnpj            String            @unique
+  name            String            @unique
   address         String?
   addressNumber   String?
   neighborhood    String?
   city            String?
   postCode        Int?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
   config          CompanyConfig?
   contacts        CompanyContact[]
   productCategory ProductCategory[]
@@ -46,22 +46,22 @@ model CompanyConfig {
 }
 
 model ProductCategory {
-  id          BigInt   @id @default(autoincrement())
+  id          BigInt    @id @default(autoincrement())
   name        String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   product     Product[]
-  companyId   BigInt   
-  company     Company  @relation(fields: [companyId], references: [id])
+  companyId   BigInt
+  company     Company   @relation(fields: [companyId], references: [id])
 }
 
 model Product {
-  id               BigInt          @id @default(autoincrement())
+  id               BigInt            @id @default(autoincrement())
   name             String
-  value            Decimal
-  discount         Decimal
-  description      String
+  value            Decimal?
+  discount         Decimal?
+  description      String?
   smallDescription String
   discountUntil    DateTime?
   photo            String?
@@ -69,21 +69,80 @@ model Product {
   quantity         Int?
   sku              String?
   publish          DateTime?
-  categoryId       BigInt 
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  category         ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId       BigInt
+  category         ProductCategory   @relation(fields: [categoryId], references: [id])
+  productQuestion  ProductQuestion[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model ProductQuestion {
+  id         BigInt     @id @default(autoincrement())
+  productId  BigInt
+  product    Product[]
+  questionId BigInt
+  question   Question[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Question {
+  id                BigInt               @id @default(autoincrement())
+  title             String
+  subtitle          String?
+  thumb             String?
+  require           Boolean              @default(false)
+  maxChoose         Int                  @default(1)
+  minxChoose        Int                  @default(0)
+  type              ResponseQuestionType
+  productQuestionId BigInt
+  productQuestion   ProductQuestion      @relation(fields: [productQuestionId], references: [id])
+  options           Option[]
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+}
+
+model Option {
+  id          BigInt     @id @default(autoincrement())
+  name        String
+  description String
+  value       Decimal?
+  discount    Decimal?
+  thumb       String
+  questionId  BigInt
+  question    Question   @relation(fields: [questionId], references: [id])
+  response    Response[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Response {
+  id        BigInt   @id @default(autoincrement())
+  value     String
+  optionId  BigInt
+  userId    BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  option    Option   @relation(fields: [optionId], references: [id])
 }
 
 model User {
-  id        BigInt   @id @default(autoincrement())
+  id        BigInt     @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String     @unique
   password  String
   companyId BigInt?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  company   Company? @relation(fields: [companyId], references: [id])
+  company   Company?   @relation(fields: [companyId], references: [id])
+  response  Response[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum ResponseQuestionType {
+  QUANTITATIVE
+  BOOLEAN
+  TEXT
 }
 
 enum CompanyContactType {
