@@ -9,6 +9,7 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { ProductModule } from "./product/product.module";
 import { BigIntScalar } from "./scalars";
 import { UserModule } from './user/user.module';
+import { SignupModule } from './signup/signup.module';
 
 @Module({
   imports: [DatabaseModule, ProductModule,
@@ -22,7 +23,8 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     CompanyModule,
-    ProductCategoryModule
+    ProductCategoryModule,
+    SignupModule
   ],
   controllers: [AppController],
   providers: [AppService],

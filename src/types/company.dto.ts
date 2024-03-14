@@ -1,5 +1,7 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
+
 import { BigIntScalar } from "src/scalars";
+import { UserData } from "./user.data";
 
 
 
@@ -36,4 +38,7 @@ export class CompanyData {
 
     @Field(() => Date)
     updatedAt: Date
+
+    @Field(type => [UserData], { nullable: true })
+    user?: UserData[]
 }
