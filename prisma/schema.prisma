@@ -10,7 +10,7 @@ datasource db {
 
 model Company {
   id              BigInt            @id @default(autoincrement())
-  cnpj            String            @unique
+  cnpj            String?            @unique
   name            String            @unique
   address         String?
   addressNumber   String?
@@ -126,6 +126,8 @@ model Response {
   user      User     @relation(fields: [userId], references: [id])
   option    Option   @relation(fields: [optionId], references: [id])
 }
+
+
 
 model User {
   id        BigInt     @id @default(autoincrement())
