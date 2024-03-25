@@ -10,6 +10,7 @@ export class UserService {
 
     constructor(private userRepository: UserRepository) { }
 
+
     public async createUser(createUserData: CreateUserInput): Promise<User> {
 
         const saltOrRounds = 10;
