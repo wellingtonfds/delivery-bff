@@ -1,4 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
@@ -8,8 +9,13 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    signIn(@Body() signInDto: Record<string, any>) {
-        return this.authService.login(signInDto.username, signInDto.password);
+    async signIn(@Body() signInDto: Record<string, any>, @Res() res: Response) {
+        const token = await this.authService.login(signInDto.username, signInDto.password);
+        if (token) {
+            res.send(token)
+            return token
+        }
+        res.status(HttpStatus.UNAUTHORIZED).send()
     }
 
     @UseGuards(AuthGuard)
