@@ -4,7 +4,7 @@ import { BigIntScalar } from "src/scalars";
 
 
 @InputType()
-export class CreateProductInput {
+export class CreateProductDto {
 
     @Field(() => BigIntScalar)
     productCategoryId: bigint
@@ -17,7 +17,6 @@ export class CreateProductInput {
 
     @Field(() => Float)
     discount: number
-
 
     @Field(() => String)
     description: string

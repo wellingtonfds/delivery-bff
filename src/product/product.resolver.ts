@@ -1,6 +1,6 @@
 
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateProductInput } from './input/create-product.input';
+import { CreateProductDto } from './dto/create-product.dto';
 import { ProductService } from './product.service';
 
 
@@ -15,7 +15,7 @@ export class ProductResolver {
     }
 
     @Mutation(() => String, { nullable: true })
-    public async createProduct(@Args('product') companyCreate: CreateProductInput): Promise<string> {
+    public async createProduct(@Args('product') companyCreate: CreateProductDto): Promise<string> {
         console.log('companyCreate', companyCreate)
         await this.productService.create(companyCreate)
         return 'ok'

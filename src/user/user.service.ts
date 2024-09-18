@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 import * as bcrypt from 'bcrypt';
-import { UserRepository } from '../database/repository/user.repository';
 import { CreateUserInput } from "./input/create-user.input";
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {

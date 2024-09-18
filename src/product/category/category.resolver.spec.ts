@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductCategoryResolver } from './product-category.resolver';
+import { ProductCategoryResolver } from './category.resolver';
 
 describe('ProductCategoryResolver', () => {
   let resolver: ProductCategoryResolver;
