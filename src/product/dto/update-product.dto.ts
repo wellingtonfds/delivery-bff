@@ -1,26 +1,27 @@
-import { Field, Float, InputType, Int } from "@nestjs/graphql";
+import { Field, Float, Int } from "@nestjs/graphql";
 import { BigIntScalar } from '../../scalars';
 
-
-@InputType()
-export class CreateProductDto {
+export class UpdateProductDto {
 
     @Field(() => BigIntScalar)
+    id: bigint
+
+    @Field(() => BigIntScalar, { nullable: true })
     productCategoryId: bigint
 
-    @Field()
+    @Field({ nullable: true })
     name: string
 
-    @Field(() => Float)
+    @Field(() => Float, { nullable: true })
     value: number
 
-    @Field(() => Float)
+    @Field(() => Float, { nullable: true })
     discount: number
 
-    @Field(() => String)
+    @Field(() => String, { nullable: true })
     description: string
 
-    @Field(() => String)
+    @Field(() => String, { nullable: true })
     smallDescription: string
 
     @Field(() => Date, { nullable: true })
@@ -34,5 +35,4 @@ export class CreateProductDto {
 
     @Field(() => Boolean, { nullable: true })
     publish?: boolean
-
 }
