@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductRepository } from './product.repository';
 import { ProductService } from './product.service';
 
@@ -71,7 +72,7 @@ describe('ProductService', () => {
         createData.quantity = 100
         createData.sku = 'TEST-123'
         createData.publish = true
-        jest.spyOn(service, 'create').mockResolvedValue({
+        jest.spyOn(service, 'update').mockResolvedValue({
             id: BigInt(1),
             name: createData.name,
             value: new Decimal(createData.value),
