@@ -1,73 +1,138 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# delivery-bff
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+BFF/API para um domínio de delivery, construída com NestJS, GraphQL, Prisma e PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O projeto expõe resolvers GraphQL para módulos como produtos, categorias, usuários e pedidos. O acesso ao banco é feito com Prisma Client, usando o schema em `prisma/schema.prisma` como fonte de verdade do modelo relacional.
 
-## Description
+## Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js
+- NestJS 10
+- Apollo GraphQL
+- Prisma 5
+- PostgreSQL
+- Jest
+- ESLint + Prettier
+- Yarn para desenvolvimento local
 
-## Installation
+## Pré-requisitos
 
-```bash
-$ yarn install
+- Node.js compatível com o projeto.
+- Yarn instalado.
+- PostgreSQL disponível.
+- Variável `DATABASE_URL` configurada para o Prisma.
+
+## Inicialização local
+
+1. Instale as dependências:
+
+   ```bash
+   yarn install
+   ```
+
+2. Crie um arquivo `.env` local com a conexão do PostgreSQL:
+
+   ```bash
+   DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public"
+   ```
+
+3. Gere o Prisma Client:
+
+   ```bash
+   yarn prepare
+   ```
+
+4. Inicie em modo desenvolvimento:
+
+   ```bash
+   yarn run start:dev
+   ```
+
+A aplicação sobe em `http://localhost:3000` conforme `src/main.ts`.
+
+## Scripts disponíveis
+
+| Comando | Descrição |
+| --- | --- |
+| `yarn run build` | Compila o projeto com `nest build`. |
+| `yarn run format` | Formata arquivos TypeScript em `src/` e `test/`. |
+| `yarn run start` | Inicia a aplicação com `nest start`. |
+| `yarn run start:dev` | Gera Prisma Client e inicia com watch mode. |
+| `yarn run start:debug` | Inicia com debug e watch mode. |
+| `yarn run start:prod` | Executa `node dist/main`. |
+| `yarn run lint` | Executa ESLint com auto-fix. |
+| `yarn run test` | Executa os testes unitários com Jest. |
+| `yarn run test:watch` | Executa Jest em watch mode. |
+| `yarn run test:cov` | Executa Jest com cobertura. |
+| `yarn run test:e2e` | Executa testes e2e com `test/jest-e2e.json`. |
+| `yarn run prepare` | Executa `npx prisma generate`. |
+
+## Variáveis de ambiente
+
+| Variável | Obrigatória | Descrição |
+| --- | --- | --- |
+| `DATABASE_URL` | Sim | URL de conexão PostgreSQL usada pelo Prisma em `prisma/schema.prisma`. |
+
+Não versione arquivos com segredos reais, como `.env` com credenciais de produção.
+
+## Estrutura do projeto
+
+```text
+src/
+  app.module.ts                 # Módulo raiz da aplicação
+  main.ts                       # Bootstrap NestJS, CORS, pipes e filtros globais
+  database/                     # Módulo de repositories e base Prisma
+  filter/                       # Filtros globais de exceção
+  product/                      # Produto e categoria de produto
+  user/                         # Usuários
+  order/                        # Pedidos
+  shared/                       # Utilitários compartilhados
+  types/                        # Tipos GraphQL/DTOs compartilhados
+prisma/
+  schema.prisma                 # Modelos e datasource Prisma
+  migrations/                   # Migrations do banco
 ```
 
-## Running the app
+Para detalhes de arquitetura, veja `docs/architecture.md`.
 
-```bash
-# development
-$ yarn run start
+## Prisma e banco de dados
 
-# watch mode
-$ yarn run start:dev
+O datasource Prisma usa PostgreSQL:
 
-# production mode
-$ yarn run start:prod
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 ```
 
-## Test
+Depois de alterar `prisma/schema.prisma`, gere novamente o client:
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+yarn prepare
 ```
 
-## Support
+## GraphQL
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+O GraphQL é configurado em `src/app.module.ts` com `GraphQLModule.forRoot` e `autoSchemaFile: true`. O schema é gerado automaticamente a partir dos resolvers, DTOs e decorators do NestJS GraphQL.
 
-## Stay in touch
+## Validação antes de abrir PR
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Execute ao menos:
 
-## License
+```bash
+yarn run test
+yarn run build
+```
 
-Nest is [MIT licensed](LICENSE).
+Quando a tarefa envolve código TypeScript, execute também:
+
+```bash
+yarn run lint
+```
+
+Revise o diff antes de finalizar:
+
+```bash
+git diff
+```
